@@ -5,7 +5,6 @@ import path from "node:path";
 let server: http.Server | null = null;
 
 export async function startBundledWebServer(): Promise<string | null> {
-  console.log("[webServer] startBundledWebServer called");
   const candidates = [
     path.join(process.resourcesPath, "dist"),
     path.resolve(__dirname, "..", "..", "..", "for-web", "packages", "client", "dist"),
@@ -14,9 +13,6 @@ export async function startBundledWebServer(): Promise<string | null> {
   const dir = candidates.find((candidate) =>
     fs.existsSync(path.join(candidate, "index.html")),
   );
-
-  console.log("[webServer] candidates:", candidates);
-  console.log("[webServer] selected dir:", dir);
 
   if (!dir) return null;
 
@@ -66,11 +62,10 @@ export async function startBundledWebServer(): Promise<string | null> {
       });
     });
 
-    server.listen(47832, "127.0.0.1", () => {
+    server.listen(47832, () => {
       const address = server?.address();
       const port =
         typeof address === "object" && address ? address.port : 0;
-      console.log("[webServer] serving on port", port, "address", address);
       resolve(`http://127.0.0.1:${port}/`);
     });
 

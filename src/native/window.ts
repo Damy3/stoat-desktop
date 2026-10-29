@@ -96,9 +96,7 @@ export function createMainWindow() {
   }
 
   // load the entrypoint
-  mainWindow
-    .loadURL(BUILD_URL.toString())
-    .then(() => mainWindow.webContents.reload());
+  mainWindow.loadURL(BUILD_URL.toString());
 
   // minimise window to tray
   mainWindow.on("close", (event) => {

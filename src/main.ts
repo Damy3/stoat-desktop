@@ -87,7 +87,6 @@ if (acquiredLock) {
       const bundled = await startBundledWebServer();
       if (bundled) {
         setBuildUrl(bundled);
-        console.log("Using bundled web app:", bundled);
       }
     }
 
