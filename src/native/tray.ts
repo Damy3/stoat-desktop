@@ -5,6 +5,7 @@ import macOsTrayIconAsset from "../../assets/desktop/iconTemplate.png?asset";
 import { version } from "../../package.json";
 
 import { mainWindow, quitApp } from "./window";
+import { openMicMuteShortcutDialog } from "./shortcutSettings";
 
 // internal tray state
 let tray: Tray = null;
@@ -63,6 +64,11 @@ export function updateTrayMenu() {
             mainWindow.show();
           }
         },
+      },
+      {
+        label: "Set mic mute shortcut...",
+        type: "normal",
+        click: openMicMuteShortcutDialog,
       },
       {
         label: "Quit App",
