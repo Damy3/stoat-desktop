@@ -21,11 +21,15 @@ import { startVirtualMic } from "./virtualMic";
 export let mainWindow: BrowserWindow;
 
 // currently in-use build
-export const BUILD_URL = new URL(
+export let BUILD_URL = new URL(
   app.commandLine.hasSwitch("force-server")
     ? app.commandLine.getSwitchValue("force-server")
     : /*MAIN_WINDOW_VITE_DEV_SERVER_URL ??*/ "https://stoat.chat/app",
 );
+
+export function setBuildUrl(url: string) {
+  BUILD_URL = new URL(url);
+}
 
 
 
