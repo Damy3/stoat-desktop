@@ -4,8 +4,14 @@ import { config } from "./config";
 import { mainWindow } from "./window";
 
 let currentAccelerator = "";
+let lastTrigger = 0;
 
 async function toggleMicrophoneMute() {
+  const now = Date.now();
+  if (now - lastTrigger < 1000) {
+    return;
+  }
+  lastTrigger = now;
   console.info("[micMute] Shortcut triggered");
   if (!mainWindow || mainWindow.isDestroyed()) return;
 

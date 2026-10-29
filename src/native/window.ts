@@ -27,6 +27,8 @@ export const BUILD_URL = new URL(
     : /*MAIN_WINDOW_VITE_DEV_SERVER_URL ??*/ "https://stoat.chat/app",
 );
 
+
+
 // internal window state
 let shouldQuit = false;
 
