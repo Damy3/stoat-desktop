@@ -97,8 +97,14 @@ const makers: ForgeConfig["makers"] = [
   }),
 ];
 
+const webDist = path.resolve(__dirname, "..", "for-web", "packages", "client", "dist");
+const extraResource = require("node:fs").existsSync(path.join(webDist, "index.html"))
+  ? [webDist]
+  : [];
+
 const config: ForgeConfig = {
   packagerConfig: {
+    extraResource,
     asar: true,
     name: STRINGS.name,
     executableName: STRINGS.execName,

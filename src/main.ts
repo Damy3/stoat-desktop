@@ -8,6 +8,8 @@ import started from "electron-squirrel-startup";
 import { initAutoLaunch } from "./native/autoLaunch";
 import { config } from "./native/config";
 import { initMicMuteShortcut } from "./native/micMute";
+import { startBundledWebServer, stopBundledWebServer } from "./native/webServer";
+import { setBuildUrl } from "./native/window";
 import {
   findDeepLink,
   initDeepLinks,
@@ -79,7 +81,16 @@ if (acquiredLock) {
   });
 
   // create and configure the app when electron is ready
-  app.on("ready", () => {
+  app.on("ready", async () => {
+    // start bundled web app if present
+    if (!app.commandLine.hasSwitch("force-server")) {
+      const bundled = await startBundledWebServer();
+      if (bundled) {
+        setBuildUrl(bundled);
+        console.log("Using bundled web app:", bundled);
+      }
+    }
+
     // create window and application contexts
     initDeepLinks();
     createMainWindow();
@@ -172,6 +183,7 @@ if (acquiredLock) {
     if (readyToQuit) return;
     e.preventDefault();
     destroyVirtualMic().finally(() => {
+      stopBundledWebServer();
       readyToQuit = true;
       app.quit();
     });
