@@ -28,6 +28,9 @@ const schema = {
   discordRpc: {
     type: "boolean",
   } as JSONSchema.Boolean,
+  microphoneMuteShortcut: {
+    type: "string",
+  } as JSONSchema.String,
   windowState: {
     type: "object",
     properties: {
@@ -60,6 +63,7 @@ const store = new Store({
     spellchecker: true,
     hardwareAcceleration: true,
     discordRpc: true,
+    microphoneMuteShortcut: "CommandOrControl+Shift+M",
     windowState: {
       x: 0,
       y: 0,
@@ -83,6 +87,7 @@ class Config {
       spellchecker: this.spellchecker,
       hardwareAcceleration: this.hardwareAcceleration,
       discordRpc: this.discordRpc,
+      microphoneMuteShortcut: this.microphoneMuteShortcut,
       windowState: this.windowState,
     });
   }
@@ -186,6 +191,21 @@ class Config {
 
     (store as never as { set(k: string, value: boolean): void }).set(
       "discordRpc",
+      value,
+    );
+
+    this.sync();
+  }
+
+  get microphoneMuteShortcut() {
+    return (store as never as { get(k: string): string }).get(
+      "microphoneMuteShortcut",
+    );
+  }
+
+  set microphoneMuteShortcut(value: string) {
+    (store as never as { set(k: string, value: string): void }).set(
+      "microphoneMuteShortcut",
       value,
     );
 

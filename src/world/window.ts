@@ -51,6 +51,15 @@ contextBridge.exposeInMainWorld("native", {
   isWayland: () => ipcRenderer.invoke("getIsWayland"),
   destroyVirtualMic: () => ipcRenderer.invoke("destroyVirtualMic"),
 
+  onToggleMicrophoneMute: (callback: () => void) => {
+    ipcRenderer.removeAllListeners("toggleMicrophoneMute");
+    ipcRenderer.on("toggleMicrophoneMute", () => callback());
+  },
+
+  getMicMuteShortcut: () => ipcRenderer.invoke("getMicMuteShortcut"),
+  setMicMuteShortcut: (accelerator: string) =>
+    ipcRenderer.invoke("setMicMuteShortcut", accelerator),
+
   onNavigate: (callback: (path: string) => void) => {
     onNavigate = callback;
     void takeNavigation();

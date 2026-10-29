@@ -7,6 +7,7 @@ import started from "electron-squirrel-startup";
 
 import { initAutoLaunch } from "./native/autoLaunch";
 import { config } from "./native/config";
+import { initMicMuteShortcut } from "./native/micMute";
 import {
   findDeepLink,
   initDeepLinks,
@@ -94,6 +95,7 @@ if (acquiredLock) {
     initDiscordRpc();
     initVirtualMic();
     initAutoLaunch();
+    initMicMuteShortcut();
 
     // follow the link the app was started with; after the tray exists, as
     // showing the window updates the tray menu
